@@ -77,8 +77,9 @@ export default {
       );
     }
 
-    // Inject loader into <body> so React can't wipe it
-    if ((headers.get("content-type") || "").includes("text/html")) {
+    // Inject loader into <body> so React can't wipe it (join page only)
+    const isJoinRoute = url.pathname === "/join" || url.pathname.startsWith("/join/");
+    if (isJoinRoute && (headers.get("content-type") || "").includes("text/html")) {
       const rewriter = new HTMLRewriter()
         .on("body", {
           element(el) {
